@@ -1,28 +1,15 @@
 package controllers;
 
-import com.twilio.Twilio;
-
-import com.twilio.twiml.Media;
-import com.twilio.twiml.Body;
-
-import com.twilio.type.PhoneNumber;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.twiml.MessagingResponse;
-import com.twilio.twiml.TwiMLException;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import play.Logger;
 import play.mvc.*;
 
-
-
-
-
-
+import com.twilio.Twilio;
+import com.twilio.type.PhoneNumber;
+import com.twilio.rest.api.v2010.account.Message;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+
+
+
 
 
 /**
@@ -30,11 +17,10 @@ import java.util.List;
  * to the application's home page.
  */
 public class HomeController extends Controller {
-    public static final String ACCOUNT_SID = "Enter your Account SID here";
-    public static final String AUTH_TOKEN = "Enter your Twilio Auth token here";
-    public static final String  YOUR_PHONE_NUMBER = "Enter the phone number you wanted to send MMS to";
+    public static final String ACCOUNT_SID = "Enter your  twilio account SID here";
+    public static final String AUTH_TOKEN = "Enter your twilio auth token here ";
     public static final String  YOUR_TWILIO_NUMBER = "Enter your twilio number here";
-
+    public static final String  YOUR_PHONE_NUMBER = "Enter the phone number you wanted to send MMS to";
 
     /**
      * An action that renders an HTML page with a welcome message.
@@ -48,20 +34,20 @@ public class HomeController extends Controller {
 
 
     public Result greeting() throws URISyntaxException{
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        try{
         Message message =  Message
-                .creator(new PhoneNumber(YOUR_PHONE_NUMBER),  // to
+                .creator(new PhoneNumber("YOUR_PHONE_NUMBER"),  // The
                         new PhoneNumber(YOUR_TWILIO_NUMBER),  // from
                         "This is from Fahmida")
                 .setMediaUrl(new URI("http://i.imgur.com/8S0MhjB.jpg"))
                 .create();
-        System.out.println(message.getSid());
 
-
-
-
-
+        System.out.println(message.getSid());}
+        catch(URISyntaxException e){
+            e.printStackTrace();
+        }
         return ok(views.html.index.render());
     }
 

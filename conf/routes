@@ -4,10 +4,10 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index()
-
 GET     /greeting                  controllers.HomeController.greeting()
-
 POST  /receive-mms                 controllers.GreetingController.message()
+
+
 
 
 
